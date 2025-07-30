@@ -72,17 +72,19 @@ find ~/.contextwarts/patterns -name "*.yaml" | wc -l
 ```
 Great! Contextwarts is now installed. Here's how to get started:
 
-🧙‍♂️ **Basic Commands:**
-- `/wizard help` - Show all available commands and capabilities
-- `/wizard create startup web-app` - Create new project with patterns
-- `/wizard enhance authentication` - Add patterns to existing project
-- `/wizard analyze` - Analyze current project for pattern opportunities
+🧙‍♂️ **Basic Commands (Always start with /clear for optimal performance):**
+- `/clear && /wizard help` - Show all available commands and capabilities
+- `/clear && /wizard create startup web-app` - Create new project with patterns
+- `/clear && /wizard enhance authentication` - Add patterns to existing project
+- `/clear && /wizard analyze` - Analyze current project for pattern opportunities
 
 🎯 **First Project:**
 Try creating a sample project to test the system:
 1. Navigate to a development directory
-2. Use: `/wizard create startup web-app`
+2. Use: `/clear && /wizard create startup web-app`
 3. Follow the guided pattern selection process
+
+💡 **Performance Tip:** Always use `/clear` before wizard commands for 3-5x faster processing and more accurate recommendations.
 
 📚 **Learn More:**
 - Read ~/.contextwarts/README.md for comprehensive documentation

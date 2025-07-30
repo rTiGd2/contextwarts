@@ -70,6 +70,9 @@ Add to your Claude Code settings.json:
 ### First Use
 
 ```bash
+# IMPORTANT: Clear context for optimal performance and accuracy
+/clear
+
 # Get help and see all capabilities
 /wizard help
 
@@ -136,24 +139,28 @@ Development methodologies and team processes
 
 ### Creating a New Startup MVP
 ```bash
+/clear
 /wizard create startup-mvp
 # Recommends: modern-web-stack + monolith-first + basic-security + test-driven-development
 ```
 
 ### Adding Authentication to Existing App
 ```bash
+/clear
 /wizard enhance authentication
 # Analyzes current setup and recommends appropriate authentication patterns
 ```
 
 ### Converting to Microservices
 ```bash
+/clear
 /wizard upgrade monolith-first to microservices-architecture  
 # Provides migration pathway and pattern upgrade guidance
 ```
 
 ### Development Methodology Selection
 ```bash
+/clear
 /wizard select-methodology
 # Interactive methodology selection based on team size, complexity, and requirements
 ```

@@ -182,10 +182,10 @@ When executing tasks, the wizard will:
 
 ### Implementation Workflow:
 ```
-/wizard generate-tasks prd-user-authentication.md
+/clear && /wizard generate-tasks prd-user-authentication.md
 → Generates tasks-prd-user-authentication.md with pattern integration
 
-/wizard execute-tasks tasks-prd-user-authentication.md  
+/clear && /wizard execute-tasks tasks-prd-user-authentication.md  
 → Starts disciplined task execution with pattern guidance
 
 User works on sub-task 1.1 following pattern guidance
