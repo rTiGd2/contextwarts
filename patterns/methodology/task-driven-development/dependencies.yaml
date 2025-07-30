@@ -1,0 +1,220 @@
+pattern:
+  id: "task-driven-development"
+  version: "1.0"
+  category: "methodology"
+  name: "Task-Driven Development (TaDD)"
+  description: "Structured development methodology using hierarchical task decomposition with disciplined execution protocols and quality integration"
+  author: "Tig Campbell-Moore"
+  created: "2025-07-30"
+  methodology_type: "hybrid"
+
+dependencies:
+  required:
+    - pattern: "version-control-integration"
+      reason: "TaDD requires git workflow integration for task completion protocols"
+      auto_apply: true
+      
+    - pattern: "automated-testing-framework"
+      reason: "Test suite execution is mandatory before parent task completion"
+      auto_apply: true
+      
+    - pattern: "markdown-task-management"
+      reason: "TaDD uses structured markdown for task documentation and tracking"
+      auto_apply: true
+
+  optional:
+    - pattern: "continuous-integration"
+      reason: "CI integration validates task completion before merging"
+      benefit: "Automated validation of task completion quality"
+      compatibility: "high"
+      
+    - pattern: "behavior-driven-development"
+      reason: "BDD scenarios can be derived from task specifications"
+      benefit: "Task requirements become testable scenarios"
+      applies_when: "stakeholder_collaboration_high"
+      
+    - pattern: "test-driven-development"
+      reason: "TDD implementation approach within task execution"
+      benefit: "Quality-first implementation for each sub-task"
+      compatibility: "high"
+
+  contextual:
+    - condition: "junior_developers OR remote_team"
+      pattern: "structured-guidance-framework"
+      reason: "Junior developers need detailed guidance and remote teams need clear protocols"
+      auto_apply: true
+      
+    - condition: "complex_features OR regulatory_requirements"
+      pattern: "task-traceability-system"
+      reason: "Complex work requires detailed traceability from requirements to implementation"
+      auto_apply: false
+
+conflicts:
+  direct:
+    - pattern: "ad-hoc-development"
+      resolution: "replace"
+      message: "TaDD replaces unstructured development with disciplined task execution"
+      migration_path: "application/enhancement.md"
+      breaking_change: false
+      
+  soft:
+    - pattern: "continuous-flow-development"
+      resolution: "adapt"
+      message: "TaDD can adapt continuous flow by using smaller task granularity"
+      adjustment: "Reduce task size to maintain flow while preserving structure"
+      compatibility: true
+
+application_modes:
+  creation:
+    complexity: "medium"
+    time_estimate: "1-2 weeks setup + ongoing practice"
+    prerequisites: ["git-workflow", "testing-framework", "markdown-tools"]
+    suitable_for: ["structured-teams", "junior-developers", "complex-projects"]
+    team_expertise_required: "basic git and testing knowledge"
+    
+  enhancement:
+    complexity: "medium"
+    time_estimate: "2-3 weeks transition"
+    compatibility_check: true
+    suitable_for: ["existing-teams", "quality-improvement", "process-standardization"]
+    process_change_required: true
+    
+  gap_filling:
+    detection_confidence: 0.8
+    auto_apply: false
+    validation_required: true
+    suitable_for: ["unstructured-development", "quality-issues", "team-coordination-gaps"]
+    
+  upgrade:
+    from_patterns: ["simple-task-tracking", "informal-development", "checklist-driven"]
+    breaking_changes: false
+    process_change: true
+    enhanced_features: ["hierarchical-tasks", "completion-protocols", "quality-integration"]
+
+context_requirements:
+  essential:
+    - team_structure: "Team structure and experience level? (Solo, Junior team, Mixed experience, Senior team)"
+    - project_complexity: "Project complexity level? (Simple features, Moderate complexity, Complex systems, Enterprise scale)"
+    - quality_requirements: "Quality standards required? (Basic functionality, Production quality, High reliability, Mission critical)"
+    - collaboration_style: "Team collaboration preference? (Individual work, Pair programming, Team reviews, Continuous collaboration)"
+    
+  methodology_specific:
+    - task_granularity: "Preferred task size? (Large tasks, Medium chunks, Small increments, Micro-tasks)"
+    - completion_validation: "Task completion validation? (Self-validation, Peer review, Automated checks, Full quality gates)"
+    - documentation_level: "Documentation requirements? (Minimal notes, Standard docs, Detailed tracking, Comprehensive records)"
+    - git_workflow_integration: "Git workflow complexity? (Simple commits, Feature branches, Pull requests, Complex workflows)"
+    
+  technical:
+    - testing_maturity: "Current testing approach? (No tests, Basic tests, Good coverage, Comprehensive testing)"
+    - automation_level: "Development automation? (Manual processes, Basic automation, CI/CD, Full automation)"
+    - tool_integration: "Tool ecosystem? (Basic tools, Integrated suite, Custom toolchain, Enterprise platform)"
+    - codebase_complexity: "Codebase characteristics? (Simple structure, Modular design, Complex architecture, Legacy system)"
+    
+  organizational:
+    - process_maturity: "Current process maturity? (Ad-hoc, Basic process, Structured approach, Mature methodology)"
+    - change_tolerance: "Change adaptation ability? (High flexibility, Moderate adaptation, Structured change, Change resistant)"
+    - accountability_culture: "Accountability preferences? (Individual ownership, Shared responsibility, Team accountability, Formal tracking)"
+    - delivery_pressure: "Delivery timeline pressure? (Relaxed pace, Moderate pressure, High urgency, Crisis mode)"
+
+comparison_framework:
+  vs_kanban:
+    tadd_advantages:
+      - "Hierarchical task structure provides better planning granularity"
+      - "Built-in quality gates with test suite integration"
+      - "Disciplined execution protocol prevents task abandonment"
+      - "Automatic file relevance identification"
+    kanban_advantages:
+      - "Visual workflow representation"
+      - "Flexible work-in-progress limits"
+      - "Continuous flow without batching"
+      - "Less rigid structure"
+    when_to_choose_tadd:
+      - "Complex features requiring detailed breakdown"
+      - "Junior developers needing structured guidance"
+      - "Quality requirements demand systematic validation"
+      - "Git workflow integration is priority"
+  
+  vs_scrum:
+    tadd_advantages:
+      - "Feature-level task breakdown rather than sprint-based"
+      - "Continuous task execution without sprint boundaries"
+      - "Built-in quality validation at task level"
+      - "Individual developer workflow optimization"
+    scrum_advantages:
+      - "Team collaboration ceremonies"
+      - "Product owner involvement"
+      - "Sprint planning and retrospectives"
+      - "Established framework with broad adoption"
+    when_to_choose_tadd:
+      - "Feature-driven development over sprint-driven"
+      - "Individual contributor productivity focus"
+      - "Technical quality is primary concern"
+      - "Less ceremony, more execution needed"
+
+  vs_traditional_todo_lists:
+    tadd_advantages:
+      - "Two-phase task generation with user confirmation"
+      - "Hierarchical parent-child task relationships"
+      - "Quality integration with test suite execution"
+      - "Git workflow integration with conventional commits"
+      - "File relevance identification and tracking"
+    traditional_advantages:
+      - "Simpler to implement and understand"
+      - "Less overhead for simple tasks"
+      - "More flexible task modification"
+      - "Lower cognitive load"
+    when_to_choose_tadd:
+      - "Complex feature implementation"
+      - "Multiple developers working on related tasks"
+      - "Quality gates are important"
+      - "Traceability from requirements to code needed"
+
+customization_points:
+  task_structure:
+    - granularity_levels: "Number of hierarchical levels (2-level, 3-level, deep hierarchy)"
+    - task_sizing: "Average task size (micro-tasks, small chunks, medium features, large initiatives)"
+    - parent_child_relationships: "Relationship strictness (flexible, structured, rigid hierarchy)"
+    - cross_cutting_tasks: "How to handle tasks that span multiple areas"
+    
+  execution_protocol:
+    - permission_requirements: "User confirmation requirements (every sub-task, parent tasks, major milestones)"
+    - completion_validation: "Validation requirements (self-check, peer review, automated validation)"
+    - quality_gates: "Quality gate configuration (tests only, linting, full CI, manual review)"
+    - commit_strategy: "Git integration approach (per sub-task, per parent task, milestone-based)"
+    
+  documentation_integration:
+    - task_tracking_format: "Task documentation format (simple markdown, structured templates, rich formatting)"
+    - file_tracking: "File relevance tracking depth (basic list, detailed descriptions, impact analysis)"
+    - progress_reporting: "Progress visibility (individual tracking, team dashboards, stakeholder reports)"
+    - historical_records: "Task history retention (current only, recent history, full archive)"
+    
+  tool_integration:
+    - git_workflow: "Git integration level (basic commits, branch management, full workflow)"
+    - testing_framework: "Test execution integration (manual trigger, automatic, CI integration)"
+    - ide_integration: "Development environment integration (standalone, IDE plugins, editor extensions)"
+    - project_management: "External tool integration (none, basic sync, full integration)"
+
+validation_criteria:
+  process_adoption:
+    - task_breakdown_quality: "Tasks are appropriately sized and well-defined"
+    - completion_protocol_adherence: "Team follows the disciplined execution protocol"
+    - quality_gate_effectiveness: "Quality gates prevent defects and maintain standards"
+    - documentation_currency: "Task lists and file tracking stay current with development"
+    
+  development_effectiveness:
+    - task_completion_rate: "Percentage of tasks completed according to protocol"
+    - quality_improvement: "Measurable improvement in code quality and defect rates"
+    - developer_productivity: "Individual developer velocity and satisfaction"
+    - knowledge_transfer: "Ease of onboarding and knowledge sharing through task documentation"
+    
+  team_coordination:
+    - work_visibility: "Team members understand current work and dependencies"
+    - collaboration_effectiveness: "Improved coordination through structured task breakdown"
+    - accountability_clarity: "Clear ownership and responsibility for task completion"
+    - conflict_resolution: "Reduced conflicts through systematic task management"
+    
+  business_impact:
+    - feature_delivery_predictability: "More predictable delivery timelines through task tracking"
+    - requirement_traceability: "Clear connection from requirements through tasks to implementation"
+    - technical_debt_management: "Systematic approach prevents technical debt accumulation"
+    - stakeholder_confidence: "Increased confidence through visible progress and quality"

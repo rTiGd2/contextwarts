@@ -1,7 +1,7 @@
-# PatternForge Wizard Help System
+# Contextwarts Wizard Help System
 
 ## Purpose
-Comprehensive help and command reference system for the PatternForge wizard, providing contextual assistance for all wizard capabilities and pattern operations.
+Comprehensive help and command reference system for the Contextwarts wizard, providing contextual assistance for all wizard capabilities and pattern operations.
 
 ---
 
@@ -14,7 +14,7 @@ Comprehensive help and command reference system for the PatternForge wizard, pro
 
 **Response Format:**
 ```
-🧙‍♂️ PatternForge Wizard v1.0 by Tig Campbell-Moore
+🧙‍♂️ Contextwarts Wizard v1.0 by Tig Campbell-Moore
 
 USAGE:
   /wizard [command] [options]
@@ -29,11 +29,15 @@ COMMANDS:
   info            Get information about specific pattern
   load-context    Load existing project context
   refresh-context Update offline development context
+  generate-tasks  Generate structured task list from PRD
+  execute-tasks   Execute tasks with disciplined protocol
+  update-tasks    Maintain task list as living documentation
 
 HELP TOPICS:
   patterns        Available patterns and categories
   modes           Pattern application modes (create/enhance/gap/upgrade)
   methodology     Development methodology patterns
+  task-management Task-driven development and execution
   examples        Usage examples and workflows
   troubleshooting Common issues and solutions
   templates       Creating custom patterns and extensions
@@ -41,11 +45,13 @@ HELP TOPICS:
 EXAMPLES:
   /wizard create startup web-app
   /wizard enhance add authentication
+  /wizard generate-tasks prd-user-auth.md
+  /wizard execute-tasks tasks-prd-user-auth.md
   /wizard help patterns
   /wizard validate patterns
 
 For detailed help: /wizard help [topic]
-GitHub: https://github.com/rTiGd2/pattern-based-wizard
+GitHub: https://github.com/rTiGd2/contextwarts
 ```
 
 ---
@@ -242,17 +248,74 @@ DIAGNOSTIC COMMANDS:
   /wizard logs                 - Show recent wizard activity
 ```
 
+### `/wizard help task-management`
+```
+📋 Task-Driven Development Integration
+
+Contextwarts includes sophisticated task management capabilities for structured development.
+
+TASK GENERATION FROM PRD:
+  /wizard generate-tasks [prd-file]     - Generate pattern-aware task list from PRD
+  
+  Process:
+  1. Analyze PRD + Current codebase + Applied patterns
+  2. Generate 5-7 high-level parent tasks
+  3. Wait for user confirmation: "Ready for sub-tasks? Type 'Go'"
+  4. Generate detailed sub-tasks with pattern guidance
+  5. Identify relevant files (implementation + tests)
+  6. Create tasks-[prd-name].md in /tasks/ directory
+
+DISCIPLINED TASK EXECUTION:
+  /wizard execute-tasks [task-file]     - Execute tasks with quality gates
+  
+  Protocol:
+  1. Load next incomplete sub-task
+  2. Request user permission to proceed
+  3. Provide pattern-specific implementation guidance
+  4. Mark sub-task complete when finished
+  5. For parent task completion: Run tests → Git add → Clean → Commit
+  6. Request permission before starting next sub-task
+
+TASK MAINTENANCE:
+  /wizard update-tasks [task-file]      - Maintain task list as living documentation
+  
+  Updates:
+  • Mark completed tasks as [x]
+  • Add newly discovered tasks
+  • Update "Relevant Files" section
+  • Sync with actual codebase state
+
+FEATURES:
+  • Two-phase generation with user confirmation
+  • Pattern-aware sub-task guidance
+  • Hierarchical parent-child task relationships
+  • Quality integration with test suite execution
+  • Git workflow integration with conventional commits
+  • File relevance identification and tracking
+  • Junior developer friendly with detailed guidance
+
+COMPLETION PROTOCOL:
+  Sub-task: Implement → Mark [x] → Request permission
+  Parent task: All sub-tasks [x] → Run tests → Git commit → Mark [x]
+
+QUALITY GATES:
+  • All tests must pass before parent task completion
+  • Pattern adherence validation
+  • Conventional commit format with detailed messages
+  • Clean code - no temporary files or debug code
+```
+
 ### `/wizard help templates`
 ```
 🛠️ Creating Custom Patterns and Extensions
 
-PatternForge supports custom pattern development and wizard extensions.
+Contextwarts supports custom pattern development and wizard extensions.
 
 DEVELOPER TEMPLATES:
-  ~/.patternforge/templates/pattern-template/     - New pattern template
-  ~/.patternforge/templates/methodology/          - Custom methodology template  
-  ~/.patternforge/templates/integration/          - Third-party integration template
-  ~/.patternforge/templates/wizard-extension/     - Wizard command extension template
+  ~/.contextwarts/templates/pattern-template/     - New pattern template
+  ~/.contextwarts/templates/methodology/          - Custom methodology template  
+  ~/.contextwarts/templates/integration/          - Third-party integration template
+  ~/.contextwarts/templates/wizard-extension/     - Wizard command extension template
 
 CREATING A NEW PATTERN:
   1. /wizard create-pattern [pattern-name] [category]
