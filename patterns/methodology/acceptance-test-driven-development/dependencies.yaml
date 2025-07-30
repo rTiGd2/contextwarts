@@ -1,0 +1,263 @@
+pattern:
+  id: "acceptance-test-driven-development"
+  version: "1.0"
+  category: "methodology"
+  name: "Acceptance Test-Driven Development (ATDD)"
+  description: "Whole-team methodology where acceptance criteria are defined first and drive development through automated acceptance tests"
+
+dependencies:
+  required:
+    - pattern: "acceptance-criteria-framework"
+      reason: "ATDD requires clear, testable acceptance criteria definition"
+      auto_apply: true
+      
+    - pattern: "automated-acceptance-testing"
+      reason: "ATDD requires automation of acceptance criteria as executable tests"
+      auto_apply: true
+      
+    - pattern: "three-amigos-collaboration"
+      reason: "ATDD requires collaboration between business, development, and QA"
+      auto_apply: true
+
+  optional:
+    - pattern: "behavior-driven-development"
+      reason: "BDD complements ATDD with Given-When-Then scenario structure"
+      benefit: "Structured scenario format for acceptance criteria"
+      compatibility: "high"
+      
+    - pattern: "test-driven-development"
+      reason: "TDD can be used for implementation after acceptance tests are defined"
+      benefit: "Multi-level testing strategy from acceptance to unit level"
+      applies_when: "comprehensive_testing_strategy"
+      
+    - pattern: "continuous-integration"
+      reason: "Automated acceptance tests run in CI pipeline for immediate feedback"
+      benefit: "Continuous validation of acceptance criteria"
+      priority: "high"
+
+  contextual:
+    - condition: "regulatory_compliance OR audit_requirements"
+      pattern: "traceability-framework"
+      reason: "Regulated environments need traceability from requirements to acceptance tests"
+      auto_apply: true
+      
+    - condition: "customer_acceptance_required"
+      pattern: "customer-collaboration-framework"
+      reason: "Customer acceptance scenarios require direct customer involvement"
+      auto_apply: false
+      
+    - condition: "complex_integration_scenarios"
+      pattern: "end-to-end-testing-framework"
+      reason: "Complex integrations require comprehensive end-to-end testing"
+      auto_apply: false
+      
+    - condition: "performance_critical OR scalability_requirements"
+      pattern: "performance-acceptance-testing"
+      reason: "Performance requirements need acceptance-level performance testing"
+      auto_apply: false
+
+conflicts:
+  direct:
+    - pattern: "implementation-first-development"
+      resolution: "replace"
+      message: "ATDD replaces implementation-first with acceptance-criteria-first approach"
+      migration_path: "application/enhancement.md"
+      breaking_change: false
+      
+    - pattern: "manual-acceptance-testing-only"
+      resolution: "automate"
+      message: "ATDD automates manual acceptance testing while preserving criteria"
+      requires_tooling_change: true
+
+  soft:
+    - pattern: "developer-only-testing"
+      resolution: "expand"
+      message: "ATDD expands testing to include whole-team collaboration"
+      adjustment: "Include business and QA in acceptance criteria definition"
+      compatibility: true
+      
+    - pattern: "late-stage-acceptance-testing"
+      resolution: "shift-left"
+      message: "ATDD shifts acceptance testing to beginning of development cycle"
+      adjustment: "Define and automate acceptance criteria before implementation"
+      compatibility: true
+
+application_modes:
+  creation:
+    complexity: "medium"
+    time_estimate: "2-3 weeks setup + ongoing practice"
+    prerequisites: ["acceptance-testing-framework", "team-collaboration-agreement", "automation-infrastructure"]
+    suitable_for: ["feature-driven-development", "customer-focused-projects", "quality-critical-systems"]
+    team_expertise_required: "business-analyst + developer + tester collaboration"
+    
+  enhancement:
+    complexity: "medium-to-high"
+    time_estimate: "3-5 weeks transition"
+    compatibility_check: true
+    suitable_for: ["existing-projects", "quality-improvement-initiatives", "customer-satisfaction-focus"]
+    process_change_required: true
+    
+  gap_filling:
+    detection_confidence: 0.75
+    auto_apply: false
+    validation_required: true
+    suitable_for: ["acceptance-criteria-gaps", "manual-testing-bottlenecks", "customer-feedback-issues"]
+    
+  upgrade:
+    from_patterns: ["manual-acceptance-testing", "late-stage-testing", "developer-only-testing"]
+    breaking_changes: false
+    process_change: true
+    enhanced_features: ["automated-acceptance-tests", "early-criteria-definition", "whole-team-collaboration"]
+
+context_requirements:
+  essential:
+    - acceptance_criteria_clarity: "Current acceptance criteria clarity? (Unclear, Basic, Well-defined, Comprehensive)"
+    - stakeholder_availability: "Stakeholder availability for criteria definition? (Limited, Regular, High, Dedicated)"
+    - testing_automation_maturity: "Test automation maturity? (Manual only, Basic automation, Good automation, Advanced)"
+    - team_collaboration_level: "Current team collaboration? (Siloed, Some interaction, Collaborative, Highly integrated)"
+    
+  methodology_specific:
+    - criteria_definition_timing: "When are acceptance criteria defined? (During development, Before development, With user stories, Never formally)"
+    - testing_approach: "Current testing approach? (Manual testing, Automated unit tests, Some integration tests, Comprehensive testing)"
+    - customer_involvement: "Customer involvement level? (No involvement, Feedback only, Requirements input, Active collaboration)"
+    - quality_focus: "Quality focus level? (Basic functionality, Good quality, High quality, Excellence)"
+    
+  technical:
+    - automation_infrastructure: "Test automation infrastructure? (None, Basic, Intermediate, Advanced)"
+    - testing_tools: "Current testing tools? (Manual tools, Basic automation, BDD tools, Enterprise testing platform)"
+    - integration_complexity: "System integration complexity? (Standalone, Few integrations, Complex integrations, Enterprise ecosystem)"
+    - deployment_frequency: "Deployment frequency? (Rarely, Monthly, Weekly, Daily/Continuous)"
+    
+  organizational:
+    - business_analyst_role: "Business analyst involvement? (No BA, Part-time BA, Dedicated BA, Multiple BAs)"
+    - qa_team_structure: "QA team structure? (No dedicated QA, Embedded QA, Separate QA team, QA center of excellence)"
+    - customer_access: "Customer access for criteria validation? (No access, Limited access, Regular access, Direct collaboration)"
+    - change_management_maturity: "Change management process? (Ad-hoc, Basic process, Structured process, Mature process)"
+
+comparison_framework:
+  vs_traditional_testing:
+    atdd_advantages:
+      - "Acceptance criteria defined before implementation"
+      - "Whole-team collaboration on acceptance criteria"
+      - "Automated validation of acceptance criteria"
+      - "Clear definition of 'done' for features"
+      - "Reduced ambiguity in requirements"
+    traditional_advantages:
+      - "Familiar to existing teams"
+      - "Less coordination overhead"
+      - "Flexible testing approach"
+      - "Lower initial learning curve"
+    when_to_choose_atdd:
+      - "Requirements ambiguity issues"
+      - "Customer satisfaction critical"
+      - "Quality is paramount"
+      - "Team collaboration needed"
+  
+  vs_bdd:
+    atdd_advantages:
+      - "Focus on acceptance criteria rather than behavior scenarios"
+      - "Broader scope than just user behavior"
+      - "Direct connection to feature completion"
+      - "Customer acceptance focus"
+    bdd_advantages:
+      - "Natural language scenarios"
+      - "Better for complex user journeys"
+      - "Established tooling ecosystem"
+      - "Business process focus"
+    when_to_choose_atdd:
+      - "Customer acceptance is critical"
+      - "Feature-driven development"
+      - "Clear acceptance criteria needed"
+      - "Whole-team needs to understand 'done'"
+
+  vs_tdd:
+    atdd_advantages:
+      - "Higher-level acceptance focus"
+      - "Customer and business involvement"
+      - "End-to-end validation"
+      - "Business value validation"
+    tdd_advantages:
+      - "Faster developer feedback"
+      - "Focus on implementation quality"
+      - "Better code design"
+      - "Lower coordination needs"
+    when_to_choose_atdd:
+      - "Customer acceptance critical"
+      - "Business value validation needed"
+      - "Requirements clarity issues"
+      - "End-to-end quality focus"
+
+customization_points:
+  acceptance_criteria_definition:
+    - criteria_format: "Choose acceptance criteria format (User story acceptance criteria, Scenario-based, Checklist, Custom)"
+    - definition_process: "Process for defining acceptance criteria (Three amigos, Stakeholder workshops, Customer sessions)"
+    - criteria_granularity: "Level of detail in acceptance criteria"
+    - approval_process: "Acceptance criteria approval and sign-off process"
+    
+  automation_strategy:
+    - automation_level: "Level of acceptance test automation (Full automation, Semi-automated, Mixed approach)"
+    - testing_pyramid: "Integration with testing pyramid (UI, API, Unit levels)"
+    - test_data_strategy: "Test data management for acceptance tests"
+    - environment_strategy: "Test environment management for acceptance testing"
+    
+  collaboration_framework:
+    - three_amigos_process: "Structure for business-development-QA collaboration"
+    - stakeholder_involvement: "Level and timing of stakeholder involvement"
+    - feedback_loops: "Feedback mechanisms for acceptance criteria refinement"
+    - knowledge_sharing: "Process for sharing acceptance criteria knowledge"
+    
+  quality_assurance:
+    - definition_of_done: "Integration of acceptance tests with definition of done"
+    - regression_testing: "Acceptance test role in regression testing"
+    - performance_criteria: "Performance acceptance criteria and testing"
+    - security_criteria: "Security acceptance criteria and validation"
+
+integration_points:
+  requirements_management:
+    - user_story_integration: "Link acceptance criteria to user stories and features"
+    - backlog_management: "Integration with product backlog and sprint planning"
+    - traceability: "Traceability from requirements through acceptance tests to code"
+    - change_management: "Managing changes to acceptance criteria"
+    
+  development_process:
+    - sprint_planning: "Role of acceptance criteria in sprint planning"
+    - development_workflow: "Integration with developer workflow"
+    - code_review: "Acceptance criteria consideration in code reviews"
+    - continuous_integration: "Automated acceptance test execution in CI"
+    
+  quality_assurance:
+    - test_planning: "Acceptance criteria as foundation for test planning"
+    - exploratory_testing: "Acceptance tests guiding exploratory testing"
+    - defect_management: "Linking defects to failing acceptance tests"
+    - release_readiness: "Acceptance test results in release decisions"
+    
+  customer_collaboration:
+    - customer_feedback: "Customer involvement in acceptance criteria validation"
+    - user_acceptance_testing: "Integration with formal user acceptance testing"
+    - demo_preparation: "Using acceptance criteria for customer demos"
+    - training_material: "Acceptance criteria as basis for user training"
+
+validation_criteria:
+  process_adoption:
+    - criteria_definition_timing: "Acceptance criteria defined before implementation (target: >90%)"
+    - whole_team_participation: "All three amigos participate in criteria definition"
+    - automation_coverage: "Percentage of acceptance criteria automated (target: >80%)"
+    - criteria_clarity: "Acceptance criteria are clear and unambiguous"
+    
+  quality_impact:
+    - defect_reduction: "Reduction in acceptance-related defects"
+    - rework_reduction: "Reduced rework due to unclear requirements"
+    - customer_satisfaction: "Improved customer satisfaction with delivered features"
+    - feature_completeness: "Features meet acceptance criteria on first delivery"
+    
+  team_effectiveness:
+    - collaboration_improvement: "Improved collaboration between business, dev, and QA"
+    - requirement_understanding: "Better understanding of requirements across team"
+    - feedback_cycle_time: "Faster feedback on requirement issues"
+    - knowledge_sharing: "Effective sharing of acceptance criteria knowledge"
+    
+  business_value:
+    - time_to_market: "Impact on feature delivery timeline"
+    - requirement_stability: "Reduced requirement changes during development"
+    - customer_acceptance_rate: "Higher customer acceptance rate for delivered features"
+    - business_confidence: "Increased business confidence in delivered features"

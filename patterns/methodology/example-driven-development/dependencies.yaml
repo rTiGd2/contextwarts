@@ -1,0 +1,267 @@
+pattern:
+  id: "example-driven-development"
+  version: "1.0"
+  category: "methodology"
+  name: "Example-Driven Development (EDD)"
+  description: "Development methodology where concrete examples define system behavior and serve as executable specifications and living documentation"
+
+dependencies:
+  required:
+    - pattern: "executable-examples-framework"
+      reason: "EDD requires framework for creating and executing examples as tests"
+      auto_apply: true
+      alternatives: ["concordion", "fitnesse", "gauge", "cucumber-with-examples"]
+      
+    - pattern: "example-specification-language"
+      reason: "Structured format for writing examples that are readable and executable"
+      auto_apply: true
+      
+    - pattern: "living-documentation-generation"
+      reason: "Examples serve as living documentation that stays current with code"
+      auto_apply: true
+
+  optional:
+    - pattern: "behavior-driven-development"
+      reason: "BDD complements EDD with scenario structure around examples"
+      benefit: "Structured scenarios containing concrete examples"
+      compatibility: "high"
+      
+    - pattern: "acceptance-test-driven-development"
+      reason: "ATDD can use concrete examples as acceptance criteria"
+      benefit: "Examples as basis for acceptance test definition"
+      applies_when: "customer_acceptance_focus"
+      
+    - pattern: "domain-driven-design"
+      reason: "Domain examples help clarify business rules and domain behavior"
+      benefit: "Examples illustrate domain concepts and rules"
+      applies_when: "complex_business_domain"
+
+  contextual:
+    - condition: "complex_business_rules OR calculation_heavy"
+      pattern: "business-rule-examples"
+      reason: "Complex business rules benefit from concrete examples"
+      auto_apply: true
+      
+    - condition: "api_development OR integration_heavy"
+      pattern: "api-example-documentation"
+      reason: "APIs benefit from example requests and responses"
+      auto_apply: false
+      
+    - condition: "regulatory_compliance OR audit_requirements"
+      pattern: "compliance-example-framework"
+      reason: "Compliance requirements often best expressed through examples"
+      auto_apply: false
+      
+    - condition: "user_facing_features OR workflow_heavy"
+      pattern: "user-journey-examples"
+      reason: "User workflows are clearly illustrated through examples"
+      auto_apply: false
+
+conflicts:
+  direct:
+    - pattern: "abstract-specification-only"
+      resolution: "replace"
+      message: "EDD replaces abstract specifications with concrete examples"
+      migration_path: "application/enhancement.md"
+      breaking_change: false
+      
+    - pattern: "implementation-without-examples"
+      resolution: "add_examples"
+      message: "EDD adds concrete examples to guide and validate implementation"
+      requires_documentation_change: true
+
+  soft:
+    - pattern: "technical-documentation-only"
+      resolution: "complement"
+      message: "EDD complements technical docs with executable examples"
+      adjustment: "Add concrete examples to existing technical documentation"
+      compatibility: true
+      
+    - pattern: "manual-testing-based-validation"
+      resolution: "automate"
+      message: "EDD automates validation through executable examples"
+      adjustment: "Convert manual test cases to executable examples"
+      compatibility: true
+
+application_modes:
+  creation:
+    complexity: "medium"
+    time_estimate: "1-3 weeks setup + ongoing practice"
+    prerequisites: ["example-tooling", "stakeholder-collaboration", "clear-requirements"]
+    suitable_for: ["business-rule-heavy-systems", "api-development", "calculation-intensive-applications"]
+    team_expertise_required: "business-analyst + developer collaboration"
+    
+  enhancement:
+    complexity: "medium"
+    time_estimate: "2-4 weeks transition"
+    compatibility_check: true
+    suitable_for: ["existing-systems", "documentation-improvement", "business-rule-clarification"]
+    gradual_adoption: true
+    
+  gap_filling:
+    detection_confidence: 0.7
+    auto_apply: false
+    validation_required: true
+    suitable_for: ["unclear-requirements", "documentation-gaps", "business-rule-confusion"]
+    
+  upgrade:
+    from_patterns: ["abstract-requirements", "manual-examples", "static-documentation"]
+    breaking_changes: false
+    documentation_change: true
+    enhanced_features: ["executable-examples", "living-documentation", "automated-validation"]
+
+context_requirements:
+  essential:
+    - business_rules_complexity: "Business rules complexity? (Simple, Moderate, Complex calculations, Very complex)"
+    - example_availability: "Availability of concrete examples? (Few examples, Some examples, Many examples, Rich example set)"
+    - stakeholder_collaboration: "Stakeholder collaboration level? (Limited, Regular, High, Continuous)"
+    - documentation_needs: "Documentation requirements? (Basic, Standard, Comprehensive, Regulatory)"
+    
+  methodology_specific:
+    - example_format_preference: "Preferred example format? (Table-based, Narrative, Structured text, Visual)"
+    - automation_level: "Desired automation level? (Manual examples, Semi-automated, Fully automated, Mixed)"
+    - audience_focus: "Primary audience for examples? (Developers, Business users, Customers, Mixed)"
+    - update_frequency: "Example update frequency? (Rarely, Occasionally, Frequently, Continuously)"
+    
+  technical:
+    - system_complexity: "System complexity level? (Simple, Moderate, Complex, Very complex)"
+    - integration_needs: "Integration example needs? (Internal only, Few integrations, Many integrations, Complex ecosystem)"
+    - calculation_intensity: "Calculation complexity? (Simple logic, Moderate calculations, Complex algorithms, Financial calculations)"
+    - data_complexity: "Data complexity? (Simple data, Structured data, Complex relationships, Big data)"
+    
+  organizational:
+    - domain_expert_availability: "Domain expert availability? (Limited, Regular access, High availability, Embedded)"
+    - documentation_culture: "Documentation culture? (Minimal, Basic, Good, Excellence-focused)"
+    - change_frequency: "Business rule change frequency? (Stable, Occasional, Frequent, Constant)"
+    - compliance_requirements: "Compliance documentation needs? (None, Basic, Strict, Regulatory)"
+
+comparison_framework:
+  vs_abstract_specifications:
+    edd_advantages:
+      - "Concrete examples are easier to understand"
+      - "Examples prevent misinterpretation"
+      - "Executable examples provide immediate validation"
+      - "Examples serve as living documentation"
+      - "Stakeholders can validate examples directly"
+    abstract_specifications_advantages:
+      - "More concise for simple cases"
+      - "Familiar format to technical teams"
+      - "Less overhead for simple requirements"
+      - "Broader coverage with fewer specifications"
+    when_to_choose_edd:
+      - "Complex business rules"
+      - "Calculation-heavy systems"
+      - "Stakeholder clarity needed"
+      - "Documentation requirements"
+  
+  vs_manual_testing:
+    edd_advantages:
+      - "Automated execution of examples"
+      - "Examples serve as regression tests"
+      - "Living documentation stays current"
+      - "Faster feedback on changes"
+      - "Consistent example execution"
+    manual_testing_advantages:
+      - "Flexible exploratory testing"
+      - "Human judgment in validation"
+      - "Lower technical barrier"
+      - "Can handle edge cases dynamically"
+    when_to_choose_edd:
+      - "Repetitive validation needed"
+      - "Business rule validation"
+      - "Documentation automation required"
+      - "Consistent execution needed"
+
+  vs_unit_testing:
+    edd_advantages:
+      - "Business-readable examples"
+      - "Higher-level behavior validation"
+      - "Stakeholder involvement possible"
+      - "Living documentation value"
+      - "Business rule focus"
+    unit_testing_advantages:
+      - "Technical implementation focus"
+      - "Faster execution"
+      - "Developer-friendly format"
+      - "Code coverage metrics"
+    when_to_choose_edd:
+      - "Business rule validation"
+      - "Stakeholder communication needed"
+      - "Documentation requirements"
+      - "Complex calculation validation"
+
+customization_points:
+  example_format:
+    - table_based_examples: "Use tables for input/output examples"
+    - narrative_examples: "Story-based examples with context"
+    - structured_templates: "Consistent format for all examples"
+    - visual_examples: "Diagrams and visual aids with examples"
+    
+  automation_approach:
+    - execution_framework: "Choose framework for executing examples (Concordion, FitNesse, Gauge)"
+    - integration_level: "Level of system integration in example execution"
+    - data_management: "Test data strategy for examples"
+    - reporting_format: "Format for example execution results"
+    
+  collaboration_model:
+    - stakeholder_involvement: "Level of stakeholder participation in example creation"
+    - review_process: "Process for reviewing and approving examples"
+    - update_workflow: "Workflow for updating examples when requirements change"
+    - knowledge_transfer: "Using examples for knowledge transfer and training"
+    
+  documentation_integration:
+    - living_documentation: "Integration with documentation generation systems"
+    - version_control: "Version control strategy for examples"
+    - publication_process: "Process for publishing example-based documentation"
+    - accessibility: "Making examples accessible to different audiences"
+
+integration_points:
+  requirements_management:
+    - requirement_examples: "Examples as part of requirement specification"
+    - user_story_examples: "Concrete examples within user stories"
+    - acceptance_criteria: "Examples as acceptance criteria"
+    - change_impact: "Using examples to assess requirement change impact"
+    
+  development_process:
+    - example_driven_design: "Using examples to drive system design"
+    - test_development: "Examples as basis for test development"
+    - code_validation: "Validating code against examples"
+    - refactoring_guidance: "Examples guide refactoring decisions"
+    
+  quality_assurance:
+    - test_case_generation: "Generating test cases from examples"
+    - regression_testing: "Examples as regression tests"
+    - exploratory_testing: "Examples guide exploratory testing"
+    - defect_prevention: "Examples prevent requirement misunderstanding"
+    
+  stakeholder_communication:
+    - requirement_clarification: "Examples clarify ambiguous requirements"
+    - demo_preparation: "Examples structure product demonstrations"
+    - training_material: "Examples as training and onboarding material"
+    - customer_validation: "Customers validate examples directly"
+
+validation_criteria:
+  example_quality:
+    - example_coverage: "Examples cover all important business scenarios"
+    - example_clarity: "Examples are clear and unambiguous"
+    - example_maintainability: "Examples are easy to maintain and update"
+    - stakeholder_validation: "Stakeholders validate and approve examples"
+    
+  automation_effectiveness:
+    - execution_reliability: "Examples execute consistently and reliably"
+    - execution_speed: "Example execution provides timely feedback"
+    - automation_coverage: "High percentage of examples are automated"
+    - maintenance_effort: "Low effort required to maintain automated examples"
+    
+  documentation_value:
+    - living_documentation_usage: "Generated documentation is actively used"
+    - documentation_currency: "Documentation stays current with system changes"
+    - accessibility: "Documentation is accessible to intended audience"
+    - knowledge_transfer: "Examples effectively transfer domain knowledge"
+    
+  business_impact:
+    - requirement_clarity: "Requirements are clearer through concrete examples"
+    - stakeholder_engagement: "Improved stakeholder engagement with examples"
+    - defect_reduction: "Fewer defects due to requirement misunderstanding"
+    - change_responsiveness: "System responds well to business changes"
+    - domain_knowledge_capture: "Domain knowledge effectively captured in examples"

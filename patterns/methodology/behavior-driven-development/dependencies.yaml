@@ -1,0 +1,263 @@
+pattern:
+  id: "behavior-driven-development"
+  version: "1.0"
+  category: "methodology"
+  name: "Behavior-Driven Development (BDD)"
+  description: "Given-When-Then development methodology where business behavior specifications drive development and testing"
+
+dependencies:
+  required:
+    - pattern: "bdd-testing-framework"
+      reason: "BDD requires specialized testing framework for Given-When-Then scenarios"
+      auto_apply: true
+      alternatives: ["cucumber", "specflow", "jest-cucumber", "behave"]
+      
+    - pattern: "living-documentation"
+      reason: "BDD specifications serve as living documentation for business requirements"
+      auto_apply: true
+      
+    - pattern: "stakeholder-collaboration"
+      reason: "BDD requires active collaboration between business, development, and QA"
+      auto_apply: true
+
+  optional:
+    - pattern: "test-driven-development"
+      reason: "BDD often combined with TDD for implementation-level testing"
+      benefit: "BDD for acceptance criteria, TDD for implementation details"
+      compatibility: "high"
+      
+    - pattern: "domain-driven-design"
+      reason: "DDD complements BDD with deep domain understanding"
+      benefit: "Shared ubiquitous language between business and development"
+      applies_when: "complex_business_domain"
+      
+    - pattern: "continuous-integration"
+      reason: "Automated execution of BDD scenarios in CI pipeline"
+      benefit: "Continuous validation of business requirements"
+      priority: "high"
+
+  contextual:
+    - condition: "regulatory_compliance OR audit_requirements"
+      pattern: "traceability-framework"
+      reason: "Regulated industries need traceability from requirements to tests"
+      auto_apply: true
+      
+    - condition: "distributed_team OR remote_stakeholders"
+      pattern: "collaborative-specification-tools"
+      reason: "Distributed teams need collaborative tools for specification development"
+      auto_apply: false
+      
+    - condition: "complex_user_journeys OR multi_step_processes"
+      pattern: "scenario-orchestration"
+      reason: "Complex workflows require sophisticated scenario management"
+      auto_apply: false
+
+conflicts:
+  direct:
+    - pattern: "technical-specification-only"
+      resolution: "replace"
+      message: "BDD replaces technical specs with business-readable scenarios"
+      migration_path: "application/enhancement.md"
+      breaking_change: false
+      
+    - pattern: "developer-only-testing"
+      resolution: "expand"
+      message: "BDD expands testing to include business stakeholder participation"
+      requires_cultural_change: true
+
+  soft:
+    - pattern: "waterfall-requirements"
+      resolution: "transform"
+      message: "BDD transforms upfront requirements into collaborative, iterative specifications"
+      adjustment: "Move from fixed requirements to evolving scenarios"
+      compatibility: false
+      
+    - pattern: "manual-testing-only"
+      resolution: "automate"
+      message: "BDD adds automation to manual testing while preserving business language"
+      adjustment: "Convert manual test cases to automated BDD scenarios"
+      compatibility: true
+
+application_modes:
+  creation:
+    complexity: "medium-to-high"
+    time_estimate: "2-4 weeks setup + ongoing practice"
+    prerequisites: ["stakeholder-buy-in", "collaborative-culture", "bdd-tooling"]
+    suitable_for: ["business-critical-applications", "complex-requirements", "stakeholder-heavy-projects"]
+    team_expertise_required: "business-analyst + developer collaboration"
+    
+  enhancement:
+    complexity: "high"
+    time_estimate: "3-6 weeks transition"
+    compatibility_check: true
+    suitable_for: ["requirements-heavy-projects", "quality-improvement", "stakeholder-alignment"]
+    cultural_change_required: true
+    
+  gap_filling:
+    detection_confidence: 0.6
+    auto_apply: false
+    validation_required: true
+    suitable_for: ["requirements-gaps", "business-disconnect", "acceptance-criteria-missing"]
+    
+  upgrade:
+    from_patterns: ["manual-acceptance-testing", "traditional-requirements", "developer-only-testing"]
+    breaking_changes: false
+    process_change: true
+    enhanced_features: ["automated-acceptance-testing", "living-documentation", "stakeholder-collaboration"]
+
+context_requirements:
+  essential:
+    - stakeholder_involvement: "Business stakeholder availability? (High, Medium, Low, Unavailable)"
+    - requirements_complexity: "Business requirements complexity? (Simple, Moderate, Complex, Very complex)"
+    - team_collaboration: "Team collaboration level? (Siloed, Some interaction, Collaborative, Highly integrated)"
+    - business_domain: "Business domain type? (Well-understood, Moderately complex, Complex, Expert domain)"
+    
+  methodology_specific:
+    - specification_approach: "Preferred specification style? (Narrative scenarios, Technical Given-When-Then, Mixed, Visual)"
+    - automation_level: "Desired automation level? (Manual scenarios, Semi-automated, Fully automated, Mixed)"
+    - documentation_needs: "Documentation requirements? (Minimal, Standard, Comprehensive, Regulatory)"
+    - feedback_cycle: "Feedback cycle preference? (Real-time, Daily, Sprint-based, Release-based)"
+    
+  technical:
+    - testing_framework_current: "Current testing approach? (Manual, Unit tests, Integration tests, No formal testing)"
+    - automation_infrastructure: "Test automation infrastructure? (None, Basic, Intermediate, Advanced)"
+    - reporting_requirements: "Reporting needs? (Basic, Executive dashboards, Regulatory reports, Custom)"
+    - integration_needs: "Tool integration needs? (Jira, TestRail, Azure DevOps, Custom tools)"
+    
+  organizational:
+    - business_analyst_availability: "Business analyst involvement? (Dedicated BA, Part-time BA, Developer-BA, No BA)"
+    - stakeholder_technical_comfort: "Stakeholder technical comfort? (Non-technical, Some technical, Technical, Expert)"
+    - change_management: "Change management approach? (Gradual, Structured, Aggressive, Revolutionary)"
+    - quality_culture: "Quality culture maturity? (Basic, Developing, Mature, Excellence-focused)"
+
+comparison_framework:
+  vs_tdd:
+    bdd_advantages:
+      - "Business stakeholder involvement and buy-in"
+      - "Requirements and tests in business language"
+      - "Focus on user behavior and business value"
+      - "Living documentation for business requirements"
+      - "Better alignment between business and development"
+    tdd_advantages:
+      - "Faster developer feedback cycle"
+      - "Focus on technical implementation quality"
+      - "Lower coordination overhead"
+      - "Better for technical and algorithmic code"
+    when_to_choose_bdd:
+      - "Complex business requirements"
+      - "High stakeholder involvement needed"
+      - "Regulatory or compliance requirements"
+      - "Customer-facing features"
+      - "Business process automation"
+  
+  vs_traditional_testing:
+    bdd_advantages:
+      - "Business-readable test specifications"
+      - "Requirements traceability and validation"
+      - "Collaborative specification development"
+      - "Living documentation that stays current"
+      - "Early requirement validation"
+    traditional_advantages:
+      - "Familiar to existing QA teams"
+      - "Lower initial learning curve"
+      - "Less coordination required"
+      - "More flexible test case management"
+    when_to_choose_bdd:
+      - "Requirements clarity issues"
+      - "Business-development disconnect"
+      - "Acceptance criteria ambiguity"
+      - "Regulatory documentation needs"
+
+  vs_manual_testing:
+    bdd_advantages:
+      - "Automated execution of business scenarios"
+      - "Consistent test execution"
+      - "Regression testing automation"
+      - "Documentation generation"
+      - "Faster feedback on business requirements"
+    manual_advantages:
+      - "Exploratory testing capabilities"
+      - "User experience validation"
+      - "Ad-hoc testing flexibility"
+      - "Lower technical barrier"
+    when_to_choose_bdd:
+      - "Repetitive acceptance testing"
+      - "Regression testing needs"
+      - "Documentation requirements"
+      - "Consistent test execution needed"
+
+customization_points:
+  scenario_development:
+    - specification_style: "Choose scenario writing style (Gherkin, Natural language, Structured templates)"
+    - scenario_granularity: "Define scenario scope and detail level"
+    - collaboration_process: "Establish three-amigos sessions and review processes"
+    - acceptance_criteria: "Template and standards for acceptance criteria"
+    
+  automation_strategy:
+    - automation_pyramid: "Balance UI, API, and unit-level BDD automation"
+    - step_definition_reuse: "Strategy for reusable step definitions"
+    - test_data_management: "Approach to test data and environment management"
+    - reporting_integration: "Integration with project management and reporting tools"
+    
+  stakeholder_engagement:
+    - workshop_format: "Format for specification workshops and reviews"
+    - feedback_mechanisms: "How stakeholders provide feedback on scenarios"
+    - approval_process: "Scenario approval and sign-off process"
+    - change_management: "How scenario changes are managed and communicated"
+    
+  technical_implementation:
+    - framework_selection: "Choose BDD framework (Cucumber, SpecFlow, Jest-Cucumber)"
+    - ci_cd_integration: "Integration with continuous integration pipeline"
+    - environment_management: "Test environment strategy for BDD scenarios"
+    - performance_considerations: "Performance testing integration with BDD"
+
+integration_points:
+  requirements_management:
+    - user_story_mapping: "Link BDD scenarios to user stories and epics"
+    - traceability_matrix: "Maintain traceability from requirements to scenarios to code"
+    - change_impact_analysis: "Assess impact of requirement changes on scenarios"
+    - acceptance_criteria: "Generate acceptance criteria from BDD scenarios"
+    
+  development_workflow:
+    - feature_development: "Integrate BDD scenarios into feature development process"
+    - code_review: "Include scenario review in code review process"
+    - definition_of_done: "BDD scenario completion as part of definition of done"
+    - release_planning: "Use BDD scenarios for release planning and validation"
+    
+  quality_assurance:
+    - test_planning: "BDD scenarios as foundation for comprehensive test planning"
+    - defect_management: "Link defects to failing BDD scenarios"
+    - test_coverage: "Measure coverage in terms of business scenarios"
+    - exploratory_testing: "Use BDD scenarios to guide exploratory testing"
+    
+  stakeholder_communication:
+    - progress_reporting: "Report development progress in terms of completed scenarios"
+    - demo_preparation: "Use BDD scenarios to structure product demonstrations"
+    - user_acceptance: "BDD scenarios as basis for user acceptance testing"
+    - training_material: "Generate user training material from BDD scenarios"
+
+validation_criteria:
+  stakeholder_engagement:
+    - stakeholder_participation_rate: "Active participation in scenario development (target: >80%)"
+    - scenario_approval_time: "Time from scenario creation to stakeholder approval"
+    - feedback_quality: "Quality and specificity of stakeholder feedback"
+    - business_value_alignment: "Scenarios clearly express business value"
+    
+  scenario_quality:
+    - scenario_coverage: "Business process coverage by BDD scenarios"
+    - scenario_maintainability: "Ease of maintaining and updating scenarios"
+    - step_definition_reuse: "Reuse rate of step definitions across scenarios"
+    - scenario_execution_reliability: "Consistent scenario execution results"
+    
+  automation_effectiveness:
+    - automation_coverage: "Percentage of scenarios automated (target: >85%)"
+    - execution_time: "BDD scenario suite execution time"
+    - false_positive_rate: "Rate of false positive scenario failures"
+    - maintenance_effort: "Effort required to maintain automated scenarios"
+    
+  business_impact:
+    - requirement_clarity: "Improved clarity and understanding of requirements"
+    - defect_prevention: "Reduction in requirements-related defects"
+    - time_to_market: "Impact on feature delivery timeline"
+    - stakeholder_satisfaction: "Stakeholder satisfaction with requirement process"
+    - living_documentation_usage: "Usage and value of generated documentation"

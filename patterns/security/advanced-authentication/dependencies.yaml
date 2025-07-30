@@ -1,0 +1,189 @@
+pattern:
+  id: "advanced-authentication"
+  version: "1.0"
+  category: "security"
+  name: "Advanced Authentication Security"
+  description: "Modern authentication patterns including WebAuthn, SSO, and MFA"
+
+dependencies:
+  required:
+    - pattern: "basic-https"
+      reason: "HTTPS required for secure authentication token transmission"
+      auto_apply: true
+      min_version: "1.0"
+    
+    - pattern: "session-management"
+      reason: "Secure session handling required for authentication flows"
+      auto_apply: true
+      
+    - pattern: "user-data-storage"
+      reason: "User credentials and profile storage required"
+      auto_apply: false  # User must choose storage pattern
+      alternatives: ["database-integration", "external-identity-provider"]
+
+  optional:
+    - pattern: "database-integration"
+      reason: "Recommended for user profile storage and audit logging"
+      benefit: "Persistent user data and comprehensive audit trails"
+      applies_when: "self_hosted_users"
+      
+    - pattern: "rate-limiting"
+      reason: "Protects authentication endpoints from abuse"
+      benefit: "Prevents brute force and denial of service attacks"
+      priority: "high"
+      
+    - pattern: "audit-logging"
+      reason: "Security event logging for compliance and monitoring"
+      benefit: "Comprehensive security audit trails"
+      applies_when: "compliance_required OR enterprise_environment"
+
+  contextual:
+    - condition: "user_base > 1000"
+      pattern: "rate-limiting"
+      reason: "Large user base requires protection against authentication abuse"
+      auto_apply: true
+      
+    - condition: "compliance_required"
+      pattern: "audit-logging"
+      reason: "Compliance regulations require comprehensive authentication audit trails"
+      auto_apply: true
+      
+    - condition: "enterprise_environment"
+      pattern: "sso-integration"
+      reason: "Enterprise users expect single sign-on capabilities"
+      auto_apply: false  # Requires SSO provider configuration
+
+conflicts:
+  direct:
+    - pattern: "basic-authentication"
+      resolution: "replace"
+      message: "Advanced authentication replaces basic password authentication"
+      migration_path: "application/upgrade.md"
+      breaking_change: false
+      
+    - pattern: "no-authentication"
+      resolution: "replace"
+      message: "Authentication pattern adds user management to anonymous applications"
+      breaking_change: true
+
+  soft:
+    - pattern: "client-side-token-storage"
+      resolution: "configure"
+      message: "Ensure secure token storage practices with advanced authentication"
+      adjustment: "Use HttpOnly cookies or secure storage APIs for tokens"
+      compatibility: true
+
+  version:
+    - pattern: "jwt-auth-basic"
+      resolution: "upgrade"
+      target_version: "advanced-authentication"
+      breaking_changes: false
+      message: "Upgrading to advanced authentication for WebAuthn and MFA support"
+
+application_modes:
+  creation:
+    complexity: "high"
+    time_estimate: "2-4 weeks"
+    prerequisites: ["https", "user-management-concept"]
+    suitable_for: ["new-applications", "greenfield-projects"]
+    team_expertise_required: "intermediate"
+    
+  enhancement:
+    complexity: "medium"
+    time_estimate: "1-2 weeks"
+    compatibility_check: true
+    suitable_for: ["existing-applications", "security-upgrades"]
+    migration_support: true
+    
+  gap_filling:
+    detection_confidence: 0.9
+    auto_apply: false
+    validation_required: true
+    suitable_for: ["incomplete-auth-implementations"]
+    
+  upgrade:
+    from_patterns: ["basic-authentication", "simple-jwt", "session-only-auth"]
+    breaking_changes: false
+    data_migration: true
+    rollback_support: true
+
+context_requirements:
+  essential:
+    - user_base_size: "How many users will authenticate? (1-100, 100-10K, 10K+)"
+    - security_requirements: "What security level is required? (Basic, Standard, High, Regulated)"
+    - compliance_needs: "Any compliance requirements? (None, GDPR, HIPAA, PCI-DSS, Multiple)"
+    
+  application_specific:
+    - existing_auth_system: "Current authentication method? (None, Basic passwords, JWT, SSO, Legacy)"
+    - authentication_preferences: "Preferred authentication methods? (Password, WebAuthn/Passkeys, Biometric, SSO, Multiple)"
+    - user_experience_priority: "User experience vs security priority? (UX-focused, Balanced, Security-first)"
+    
+  technical:
+    - backend_technology: "Backend framework? (.NET, Node.js, Python, Java, Other)"
+    - frontend_technology: "Frontend framework? (React, Vue, Angular, Vanilla JS, Mobile)"
+    - deployment_environment: "Where will this run? (Cloud, On-premise, Hybrid, Edge)"
+    
+  organizational:
+    - team_expertise: "Team's auth experience? (Beginner, Some experience, Expert)"
+    - maintenance_capacity: "Ongoing maintenance capacity? (Minimal, Standard, Comprehensive)"
+    - third_party_tolerance: "Comfort with third-party services? (Prefer self-hosted, Open to SaaS, SaaS-first)"
+
+customization_points:
+  authentication_methods:
+    - webauthn_passkeys: "Enable WebAuthn/Passkey support"
+    - multi_factor: "Require multi-factor authentication"
+    - sso_integration: "Enable SSO with identity providers"
+    - biometric_auth: "Support biometric authentication"
+    
+  security_features:
+    - adaptive_auth: "Enable risk-based adaptive authentication"
+    - session_security: "Advanced session security features"
+    - device_trust: "Device trust and management"
+    - threat_protection: "Advanced threat protection"
+    
+  user_experience:
+    - passwordless_flow: "Enable passwordless authentication flows"
+    - social_login: "Social media authentication options"
+    - guest_access: "Anonymous/guest access patterns"
+    - account_recovery: "Self-service account recovery"
+
+integration_points:
+  databases:
+    - user_storage: "User profile and credential storage"
+    - session_storage: "Session and token storage"
+    - audit_storage: "Security event and audit log storage"
+    
+  external_services:
+    - identity_providers: "SSO and federated identity integration"
+    - email_service: "Account verification and notifications"
+    - sms_service: "SMS-based multi-factor authentication"
+    - push_service: "Push notification authentication"
+    
+  frontend_integration:
+    - auth_components: "Authentication UI components"
+    - route_protection: "Protected route implementations"
+    - state_management: "Authentication state management"
+    - token_handling: "Secure token storage and refresh"
+
+validation_criteria:
+  security:
+    - https_enforced: "All authentication flows use HTTPS"
+    - secure_token_storage: "Tokens stored securely (HttpOnly cookies or secure storage)"
+    - password_requirements: "Strong password policies enforced"
+    - session_security: "Secure session management implemented"
+    
+  functionality:
+    - auth_flows_working: "All authentication flows functional"
+    - error_handling: "Proper error handling and user feedback"
+    - logout_working: "Secure logout functionality"
+    - account_recovery: "Account recovery mechanisms working"
+    
+  performance:
+    - auth_response_time: "Authentication response under 2 seconds"
+    - concurrent_users: "Supports expected concurrent user load"
+    - scalability: "Horizontally scalable authentication system"
+    
+  compliance:
+    - audit_logging: "Comprehensive security event logging"
+    - data_protection: "User data protection measures"
+    - privacy_controls: "User privacy and consent management"

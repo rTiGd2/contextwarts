@@ -1,0 +1,223 @@
+pattern:
+  id: "multi-database-architecture"
+  version: "1.0"
+  category: "architecture"
+  name: "Multi-Database Architecture"
+  description: "Polyglot persistence architecture using multiple database technologies optimized for different data patterns and use cases"
+
+dependencies:
+  required:
+    - pattern: "application-architecture"
+      reason: "Multi-database architecture requires well-defined application architecture boundaries"
+      auto_apply: false  # User must choose architecture pattern first
+      alternatives: ["monolith-first", "microservices-ready", "serverless-native"]
+    
+    - pattern: "data-modeling"
+      reason: "Proper data modeling required to determine optimal database selection per use case"
+      auto_apply: true
+      
+    - pattern: "connection-management"
+      reason: "Multiple databases require sophisticated connection pooling and management"
+      auto_apply: true
+
+  optional:
+    - pattern: "container-first-deployment"
+      reason: "Containerization simplifies multi-database deployment and orchestration"
+      benefit: "Simplified database deployment, scaling, and environment consistency"
+      priority: "high"
+      
+    - pattern: "advanced-authentication"
+      reason: "Multiple databases require centralized authentication and authorization"
+      benefit: "Consistent security across all database systems"
+      applies_when: "production_environment OR multiple_teams"
+      
+    - pattern: "enterprise-monitoring-observability"
+      reason: "Multi-database systems require comprehensive monitoring across all data stores"
+      benefit: "Unified visibility into performance and health across database systems"
+      priority: "high"
+
+  contextual:
+    - condition: "microservices_architecture"
+      pattern: "database-per-service"
+      reason: "Microservices benefit from database-per-service patterns for independence"
+      auto_apply: false  # Design decision requiring validation
+      
+    - condition: "high_traffic OR performance_critical"
+      pattern: "database-caching-layer"
+      reason: "High-traffic systems require dedicated caching layer for performance"
+      auto_apply: true
+      
+    - condition: "analytics_requirements OR reporting_needs"
+      pattern: "analytical-database"
+      reason: "Analytics workloads require specialized OLAP or time-series databases"
+      auto_apply: false  # Depends on specific analytics requirements
+      
+    - condition: "search_requirements OR full_text_search"
+      pattern: "search-database"
+      reason: "Search functionality requires specialized search engines"
+      auto_apply: false  # Depends on search complexity
+      
+    - condition: "real_time_requirements OR event_driven"
+      pattern: "event-streaming-database"
+      reason: "Real-time systems benefit from event streaming and specialized event stores"
+      auto_apply: false
+
+conflicts:
+  direct:
+    - pattern: "single-database-architecture"
+      resolution: "replace"
+      message: "Multi-database architecture replaces single-database approach"
+      migration_path: "application/enhancement.md"
+      breaking_change: false
+      
+    - pattern: "database-agnostic-approach"
+      resolution: "design_decision"
+      message: "Multi-database architecture embraces database specialization vs agnostic approach"
+      requires_validation: true
+
+  soft:
+    - pattern: "simple-deployment"
+      resolution: "complexity_trade_off"
+      message: "Multi-database architecture increases deployment complexity for performance benefits"
+      adjustment: "Consider containerization and automation to manage complexity"
+      compatibility: true
+
+  version:
+    - pattern: "legacy-database-architecture"
+      resolution: "modernize"
+      target_version: "multi-database-architecture"
+      breaking_changes: false
+      message: "Modernizing to polyglot persistence for optimal performance per use case"
+
+application_modes:
+  creation:
+    complexity: "high"
+    time_estimate: "2-6 weeks"
+    prerequisites: ["data-requirements-analysis", "performance-requirements-defined"]
+    suitable_for: ["new-applications", "greenfield-projects", "performance-critical-systems"]
+    team_expertise_required: "intermediate-to-advanced"
+    
+  enhancement:
+    complexity: "medium-to-high"
+    time_estimate: "2-4 weeks"
+    compatibility_check: true
+    suitable_for: ["existing-applications", "performance-optimization", "feature-enhancement"]
+    migration_support: true
+    zero_downtime_possible: true
+    
+  gap_filling:
+    detection_confidence: 0.85
+    auto_apply: false
+    validation_required: true
+    suitable_for: ["performance-bottlenecks", "scalability-limitations", "feature-gaps"]
+    critical_for: ["high-traffic-systems", "data-intensive-applications"]
+    
+  upgrade:
+    from_patterns: ["single-database", "basic-database-architecture"]
+    breaking_changes: false
+    data_migration: true
+    rollback_support: true
+    enhanced_features: ["specialized-databases", "performance-optimization", "scalability-patterns"]
+
+context_requirements:
+  essential:
+    - data_patterns: "What types of data does your application handle? (Transactional, Analytical, Caching, Search, Time-series, Files/Blobs)"
+    - performance_requirements: "Performance needs? (Standard, High-throughput, Low-latency, Real-time, Batch processing)"
+    - scalability_needs: "Expected scale? (Small, Medium, Large, Massive, Variable/elastic)"
+    - consistency_requirements: "Data consistency needs? (Strong consistency, Eventual consistency, Mixed requirements)"
+    
+  application_specific:
+    - use_case_patterns: "Primary use cases? (CRUD operations, Analytics, Search, Caching, Real-time events, Machine learning)"
+    - query_patterns: "Query complexity? (Simple lookups, Complex joins, Aggregations, Full-text search, Graph queries)"
+    - data_relationships: "Data relationship complexity? (Simple, Moderate, Complex relational, Graph-like, Document-oriented)"
+    - integration_needs: "Integration requirements? (APIs, ETL/ELT, Real-time sync, Batch processing, Event streaming)"
+    
+  technical:
+    - current_databases: "Current database usage? (None, Single database, Multiple databases, Legacy systems)"
+    - team_expertise: "Database expertise? (SQL only, NoSQL experience, Multi-database experience, Database administration)"
+    - infrastructure_preference: "Database hosting preference? (Managed services, Self-hosted, Hybrid, Cloud-native)"
+    - technology_constraints: "Technology constraints? (Open source only, Specific vendors, Compliance requirements, Budget limits)"
+    
+  organizational:
+    - operational_capacity: "Database operations capacity? (Minimal, Standard, Dedicated DBA, Database team)"
+    - maintenance_preference: "Maintenance approach? (Fully managed, Assisted management, Self-managed, Custom solutions)"
+    - compliance_requirements: "Compliance needs? (None, GDPR, HIPAA, PCI-DSS, Industry-specific, Government)"
+    - budget_considerations: "Budget approach? (Cost-optimized, Balanced, Performance-focused, Enterprise unlimited)"
+
+customization_points:
+  database_selection:
+    - transactional_database: "Choose transactional database (PostgreSQL, MySQL, SQL Server, Oracle)"
+    - analytical_database: "Choose analytical database (ClickHouse, BigQuery, Redshift, Snowflake)"
+    - caching_layer: "Choose caching solution (Redis, Memcached, KeyDB, DragonflyDB)"
+    - search_engine: "Choose search solution (Elasticsearch, OpenSearch, Solr, Algolia)"
+    - document_store: "Choose document database (MongoDB, CouchDB, DynamoDB, Azure Cosmos DB)"
+    - time_series_database: "Choose time-series database (InfluxDB, TimescaleDB, Clickhouse, Prometheus)"
+    - vector_database: "Choose vector database (Pinecone, Weaviate, Qdrant, Chroma)"
+    
+  architecture_patterns:
+    - consistency_model: "Choose consistency approach (Strong, Eventual, Mixed, Custom)"
+    - transaction_strategy: "Choose transaction pattern (Local transactions, Distributed transactions, Saga pattern, CQRS)"
+    - data_synchronization: "Choose sync strategy (Real-time CDC, Batch ETL, Event-driven, API-driven)"
+    - partitioning_strategy: "Choose partitioning approach (Horizontal sharding, Vertical partitioning, Functional, Geographic)"
+    
+  operational_patterns:
+    - backup_strategy: "Multi-database backup coordination and point-in-time recovery"
+    - monitoring_approach: "Unified monitoring across all database systems"
+    - security_model: "Centralized authentication and authorization across databases"
+    - deployment_automation: "Infrastructure as code for multi-database environments"
+    
+  integration_patterns:
+    - api_layer_design: "API abstraction layer over multiple databases"
+    - data_pipeline_architecture: "ETL/ELT pipelines between database systems"
+    - event_driven_integration: "Event streaming between databases"
+    - microservices_data_patterns: "Database-per-service vs shared database patterns"
+
+integration_points:
+  application_layer:
+    - orm_abstraction: "Object-relational mapping across multiple database types"
+    - connection_pooling: "Sophisticated connection management across databases"
+    - transaction_coordination: "Distributed transaction coordination and saga patterns"
+    - data_access_patterns: "Repository and unit-of-work patterns for multiple databases"
+    
+  infrastructure_integration:
+    - container_orchestration: "Kubernetes or Docker Compose multi-database deployment"
+    - service_mesh: "Service mesh integration for database communication"
+    - load_balancing: "Database load balancing and failover strategies"
+    - networking: "Network security and segmentation for database access"
+    
+  data_pipeline_integration:
+    - change_data_capture: "CDC systems for real-time data synchronization"
+    - etl_orchestration: "Data pipeline orchestration tools (Airflow, Prefect, Dagster)"
+    - stream_processing: "Real-time stream processing (Kafka, Pulsar, EventBridge)"
+    - data_catalog: "Data discovery and lineage tracking across databases"
+    
+  monitoring_integration:
+    - performance_monitoring: "Database performance monitoring across all systems"
+    - alerting_coordination: "Unified alerting for multi-database issues"
+    - log_aggregation: "Centralized logging for all database operations"
+    - metrics_collection: "Standardized metrics collection across database types"
+
+validation_criteria:
+  performance:
+    - query_performance: "Query response times meet SLA requirements across all databases"
+    - throughput_capacity: "System handles expected concurrent load across all databases"
+    - scalability_validation: "Horizontal and vertical scaling works as designed"
+    - resource_utilization: "Database resources optimally utilized based on workload patterns"
+    
+  reliability:
+    - high_availability: "Database failover and recovery working within RTO/RPO requirements"
+    - data_consistency: "Data consistency maintained across all database systems"
+    - backup_recovery: "Backup and recovery procedures tested and validated"
+    - disaster_recovery: "Disaster recovery procedures tested for all databases"
+    
+  operational:
+    - monitoring_coverage: "All databases monitored with appropriate alerting"
+    - maintenance_procedures: "Database maintenance procedures documented and tested"
+    - security_compliance: "Security controls implemented and audited across all databases"
+    - cost_optimization: "Database costs optimized based on usage patterns and requirements"
+    
+  integration:
+    - data_synchronization: "Data synchronization working correctly between databases"
+    - transaction_integrity: "Cross-database transactions maintain data integrity"
+    - api_consistency: "Application APIs provide consistent interface across databases"
+    - development_productivity: "Development team productive with multi-database patterns"

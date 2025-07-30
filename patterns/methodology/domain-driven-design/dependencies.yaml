@@ -1,0 +1,265 @@
+pattern:
+  id: "domain-driven-design"
+  version: "1.0"
+  category: "methodology"
+  name: "Domain-Driven Design (DDD)"
+  description: "Strategic and tactical design methodology focused on modeling complex business domains through ubiquitous language and bounded contexts"
+
+dependencies:
+  required:
+    - pattern: "domain-modeling"
+      reason: "DDD requires systematic approach to modeling business domain"
+      auto_apply: true
+      
+    - pattern: "ubiquitous-language"
+      reason: "Shared language between business and development is core to DDD"
+      auto_apply: true
+      
+    - pattern: "bounded-context-architecture"
+      reason: "DDD requires clear boundaries between different domain contexts"
+      auto_apply: true
+
+  optional:
+    - pattern: "event-storming"
+      reason: "Event storming is primary technique for domain discovery in DDD"
+      benefit: "Collaborative domain discovery and modeling"
+      priority: "high"
+      
+    - pattern: "cqrs-event-sourcing"
+      reason: "Complex domains often benefit from CQRS and event sourcing patterns"
+      benefit: "Separation of command/query models and event-driven architecture"
+      applies_when: "complex_business_logic OR audit_requirements"
+      
+    - pattern: "microservices-architecture"
+      reason: "Bounded contexts naturally align with microservice boundaries"
+      benefit: "Service boundaries based on domain boundaries"
+      applies_when: "distributed_system OR large_team"
+
+  contextual:
+    - condition: "complex_business_domain"
+      pattern: "strategic-design-patterns"
+      reason: "Complex domains require strategic design to manage complexity"
+      auto_apply: true
+      
+    - condition: "legacy_system_integration"
+      pattern: "anticorruption-layer"
+      reason: "Legacy integration requires protection of domain model"
+      auto_apply: false
+      
+    - condition: "multiple_teams OR large_organization"
+      pattern: "context-mapping"
+      reason: "Multiple teams need clear context boundaries and integration patterns"
+      auto_apply: true
+      
+    - condition: "regulatory_domain OR financial_domain"
+      pattern: "aggregate-design-patterns"
+      reason: "Regulated domains need careful aggregate design for consistency"
+      auto_apply: false
+
+conflicts:
+  direct:
+    - pattern: "anemic-domain-model"
+      resolution: "replace"
+      message: "DDD replaces anemic models with rich domain models"
+      migration_path: "application/enhancement.md"
+      breaking_change: false
+      
+    - pattern: "database-driven-design"
+      resolution: "invert"
+      message: "DDD inverts dependency from database-first to domain-first design"
+      requires_architectural_change: true
+
+  soft:
+    - pattern: "crud-only-operations"
+      resolution: "enrich"
+      message: "DDD enriches simple CRUD with domain behavior and business rules"
+      adjustment: "Add domain logic and business rules to entities"
+      compatibility: true
+      
+    - pattern: "transaction-script-pattern"
+      resolution: "refactor"
+      message: "DDD refactors procedural code into domain objects and services"
+      adjustment: "Move business logic from services into domain entities"
+      compatibility: true
+
+application_modes:
+  creation:
+    complexity: "high"
+    time_estimate: "4-8 weeks initial modeling + ongoing refinement"
+    prerequisites: ["domain-expertise-access", "complex-business-requirements", "strategic-commitment"]
+    suitable_for: ["complex-business-domains", "long-term-projects", "business-critical-systems"]
+    team_expertise_required: "senior-developers + domain-experts"
+    
+  enhancement:
+    complexity: "very-high"
+    time_estimate: "6-12 weeks transformation"
+    compatibility_check: true
+    suitable_for: ["legacy-modernization", "growing-complexity", "business-model-changes"]
+    requires_refactoring: true
+    
+  gap_filling:
+    detection_confidence: 0.8
+    auto_apply: false
+    validation_required: true
+    suitable_for: ["business-logic-scattered", "domain-knowledge-gaps", "model-complexity"]
+    
+  upgrade:
+    from_patterns: ["anemic-domain-model", "transaction-script", "crud-operations"]
+    breaking_changes: true
+    architectural_change: true
+    enhanced_features: ["rich-domain-models", "bounded-contexts", "domain-events"]
+
+context_requirements:
+  essential:
+    - domain_complexity: "Business domain complexity? (Simple CRUD, Moderate rules, Complex processes, Expert domain)"
+    - business_rules_complexity: "Business rules complexity? (Few simple rules, Many rules, Complex interdependencies, Regulatory complexity)"
+    - domain_expert_availability: "Domain expert availability? (No experts, Limited access, Regular access, Embedded experts)"
+    - project_longevity: "Expected project lifespan? (Short-term, Medium-term, Long-term, Indefinite)"
+    
+  methodology_specific:
+    - modeling_approach: "Preferred modeling approach? (Code-first, Model-first, Collaborative, Event-storming)"
+    - bounded_context_strategy: "Context boundaries preference? (Large contexts, Medium contexts, Fine-grained, Let emerge)"
+    - integration_complexity: "System integration needs? (Standalone, Few integrations, Many integrations, Complex ecosystem)"
+    - consistency_requirements: "Consistency requirements? (Eventual consistency OK, Strong consistency needed, Mixed, Strict ACID)"
+    
+  technical:
+    - current_architecture: "Current architecture? (Monolith, Modular monolith, Microservices, Legacy system)"
+    - data_architecture: "Data architecture complexity? (Single database, Multiple databases, Legacy data, Complex data relationships)"
+    - performance_requirements: "Performance requirements? (Standard, High-throughput, Low-latency, Extreme performance)"
+    - scalability_needs: "Scalability requirements? (Single instance, Horizontal scaling, Geographic distribution, Massive scale)"
+    
+  organizational:
+    - team_size: "Development team size? (Small 2-5, Medium 5-15, Large 15-50, Multiple teams)"
+    - domain_knowledge_distribution: "Domain knowledge spread? (Single expert, Few experts, Distributed, Well-documented)"
+    - change_tolerance: "Business change frequency? (Stable, Occasional changes, Frequent changes, Constant evolution)"
+    - investment_commitment: "Long-term investment commitment? (Short-term project, Medium commitment, Long-term investment, Strategic initiative)"
+
+comparison_framework:
+  vs_crud_architecture:
+    ddd_advantages:
+      - "Rich business logic captured in domain model"
+      - "Business rules centralized and explicit"
+      - "Better alignment between business and code"
+      - "Handles complex business scenarios naturally"
+      - "Evolves with changing business requirements"
+    crud_advantages:
+      - "Simpler implementation and maintenance"
+      - "Faster initial development"
+      - "Well-understood by most developers"
+      - "Suitable for simple business logic"
+    when_to_choose_ddd:
+      - "Complex business rules and processes"
+      - "Long-term strategic systems"
+      - "Business logic is the core value"
+      - "Frequent business requirement changes"
+  
+  vs_transaction_script:
+    ddd_advantages:
+      - "Better code organization and maintainability"
+      - "Encapsulated business rules"
+      - "Reusable domain components"
+      - "Testable business logic"
+      - "Scalable to complex scenarios"
+    transaction_script_advantages:
+      - "Simple to understand and implement"
+      - "Direct procedural flow"
+      - "Less abstraction overhead"
+      - "Fast for simple operations"
+    when_to_choose_ddd:
+      - "Business logic complexity growing"
+      - "Multiple similar operations"
+      - "Business rule reuse needed"
+      - "Long-term maintainability important"
+
+  vs_microservices_without_ddd:
+    ddd_advantages:
+      - "Service boundaries based on business boundaries"
+      - "Reduced coupling between services"
+      - "Clear service ownership and responsibility"
+      - "Better data consistency within boundaries"
+      - "Easier to evolve individual services"
+    microservices_without_ddd_advantages:
+      - "Technical boundaries may be simpler"
+      - "Less upfront domain modeling required"
+      - "Can start with familiar technical boundaries"
+    when_to_choose_ddd:
+      - "Complex inter-service interactions"
+      - "Business-driven service evolution"
+      - "Multiple teams working on different domains"
+      - "Long-term system evolution"
+
+customization_points:
+  strategic_design:
+    - context_mapping_strategy: "Approach to identifying and mapping bounded contexts"
+    - integration_patterns: "Choose integration patterns between contexts (Shared kernel, Customer-supplier, etc.)"
+    - domain_event_strategy: "Domain events for cross-context communication"
+    - anticorruption_layers: "Protection patterns for legacy system integration"
+    
+  tactical_design:
+    - aggregate_design: "Aggregate size and responsibility boundaries"
+    - entity_value_object_strategy: "Guidelines for entity vs value object decisions"
+    - domain_service_usage: "When and how to use domain services"
+    - repository_patterns: "Repository abstraction and implementation patterns"
+    
+  modeling_approach:
+    - event_storming_process: "Event storming workshops and domain discovery"
+    - ubiquitous_language_development: "Process for developing and maintaining shared language"
+    - model_refinement: "Iterative model refinement and validation process"
+    - domain_expert_collaboration: "Structured collaboration with domain experts"
+    
+  implementation_patterns:
+    - layered_architecture: "Clean architecture with DDD layers"
+    - cqrs_integration: "Command Query Responsibility Segregation integration"
+    - event_sourcing: "Event sourcing for audit and temporal requirements"
+    - saga_patterns: "Long-running process management with sagas"
+
+integration_points:
+  business_analysis:
+    - requirements_gathering: "Domain-driven requirements analysis and modeling"
+    - business_process_modeling: "Integration with business process analysis"
+    - stakeholder_workshops: "Event storming and collaborative modeling sessions"
+    - knowledge_capture: "Systematic domain knowledge capture and documentation"
+    
+  architecture_design:
+    - system_architecture: "DDD influence on overall system architecture"
+    - service_boundaries: "Bounded contexts as service boundaries"
+    - data_architecture: "Domain-driven data modeling and persistence"
+    - integration_architecture: "Context integration and anticorruption patterns"
+    
+  development_practices:
+    - test_driven_development: "TDD within domain model development"
+    - behavior_driven_development: "BDD for domain behavior specification"
+    - refactoring_practices: "Domain model refactoring and evolution"
+    - code_organization: "Package and module organization by domain"
+    
+  project_management:
+    - feature_planning: "Domain-driven feature planning and prioritization"
+    - team_organization: "Team structure aligned with bounded contexts"
+    - knowledge_management: "Domain knowledge documentation and sharing"
+    - evolution_planning: "Planning for domain model evolution"
+
+validation_criteria:
+  domain_modeling:
+    - ubiquitous_language_usage: "Consistent use of domain language in code and communication"
+    - bounded_context_clarity: "Clear boundaries and responsibilities for each context"
+    - aggregate_design_quality: "Well-designed aggregates with appropriate boundaries"
+    - domain_logic_encapsulation: "Business rules properly encapsulated in domain objects"
+    
+  architecture_alignment:
+    - business_alignment: "System structure reflects business structure"
+    - context_independence: "Bounded contexts are loosely coupled"
+    - integration_patterns: "Appropriate integration patterns between contexts"
+    - data_consistency: "Appropriate consistency guarantees within aggregates"
+    
+  team_effectiveness:
+    - domain_expert_collaboration: "Effective collaboration between developers and domain experts"
+    - knowledge_sharing: "Domain knowledge effectively shared across team"
+    - model_evolution: "Domain model evolves appropriately with business changes"
+    - communication_effectiveness: "Improved communication using ubiquitous language"
+    
+  business_impact:
+    - requirement_clarity: "Business requirements better understood and captured"
+    - change_responsiveness: "System responds well to business changes"
+    - business_value_delivery: "Clear connection between domain model and business value"
+    - long_term_maintainability: "System maintainability improves over time"
+    - expert_confidence: "Domain experts confident in system behavior"

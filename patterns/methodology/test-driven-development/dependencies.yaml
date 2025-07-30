@@ -1,0 +1,251 @@
+pattern:
+  id: "test-driven-development"
+  version: "1.0"
+  category: "methodology"
+  name: "Test-Driven Development (TDD)"
+  description: "Red-Green-Refactor development methodology where tests drive code design and implementation"
+
+dependencies:
+  required:
+    - pattern: "testing-framework"
+      reason: "TDD requires robust testing framework for unit and integration tests"
+      auto_apply: true
+      
+    - pattern: "code-coverage-tracking"
+      reason: "TDD benefits from coverage tracking to ensure tests are meaningful"
+      auto_apply: true
+      
+    - pattern: "refactoring-tools"
+      reason: "Refactoring is core to TDD cycle and requires good tooling support"
+      auto_apply: true
+
+  optional:
+    - pattern: "continuous-integration"
+      reason: "CI/CD amplifies TDD benefits with immediate feedback"
+      benefit: "Continuous validation of test suite and early problem detection"
+      priority: "high"
+      
+    - pattern: "code-quality-tools"
+      reason: "Static analysis complements TDD testing"
+      benefit: "Catches issues that tests might miss"
+      
+    - pattern: "pair-programming-setup"
+      reason: "TDD often practiced with pair programming"
+      benefit: "Knowledge sharing and real-time code review"
+      applies_when: "team_collaboration_high"
+
+  contextual:
+    - condition: "legacy_code_present"
+      pattern: "legacy-testing-strategies"
+      reason: "Legacy code requires specific TDD adaptation strategies"
+      auto_apply: false
+      
+    - condition: "microservices_architecture"
+      pattern: "contract-testing"
+      reason: "Microservices TDD benefits from contract testing patterns"
+      auto_apply: false
+      
+    - condition: "complex_business_logic"
+      pattern: "domain-modeling-first"
+      reason: "Complex domains may benefit from hybrid TDD/DDD approach"
+      auto_apply: false
+
+conflicts:
+  direct:
+    - pattern: "code-first-no-tests"
+      resolution: "replace"
+      message: "TDD replaces code-first development with test-first approach"
+      migration_path: "application/enhancement.md"
+      breaking_change: false
+      
+    - pattern: "manual-testing-only"
+      resolution: "enhance"
+      message: "TDD adds automated testing to complement manual testing"
+      compatibility: true
+
+  soft:
+    - pattern: "behavior-driven-development"
+      resolution: "hybrid"
+      message: "TDD and BDD can be combined with TDD for implementation, BDD for requirements"
+      adjustment: "Use BDD for feature definition, TDD for implementation"
+      compatibility: true
+      
+    - pattern: "domain-driven-design"
+      resolution: "integrate"
+      message: "TDD and DDD complement each other well with proper integration"
+      adjustment: "Use DDD for domain modeling, TDD for implementation"
+      compatibility: true
+
+application_modes:
+  creation:
+    complexity: "medium"
+    time_estimate: "1-2 weeks setup + ongoing practice"
+    prerequisites: ["testing-framework-selected", "development-environment-setup"]
+    suitable_for: ["new-projects", "algorithmic-code", "refactoring-projects"]
+    team_expertise_required: "intermediate"
+    
+  enhancement:
+    complexity: "medium-to-high"
+    time_estimate: "2-4 weeks transition"
+    compatibility_check: true
+    suitable_for: ["existing-codebases", "team-skill-development", "quality-improvement"]
+    gradual_adoption: true
+    
+  gap_filling:
+    detection_confidence: 0.7
+    auto_apply: false
+    validation_required: true
+    suitable_for: ["untested-codebases", "quality-issues", "refactoring-needs"]
+    
+  upgrade:
+    from_patterns: ["basic-unit-testing", "manual-testing", "no-structured-methodology"]
+    breaking_changes: false
+    gradual_transition: true
+    enhanced_features: ["advanced-testing-patterns", "property-based-testing", "mutation-testing"]
+
+context_requirements:
+  essential:
+    - project_type: "What type of project? (New development, Legacy refactoring, Library/Framework, Application)"
+    - code_complexity: "Code complexity level? (Simple CRUD, Business logic, Algorithmic, Complex domain)"
+    - team_experience: "Team's TDD experience? (None, Some exposure, Experienced, Expert)"
+    - testing_current_state: "Current testing approach? (None, Manual only, Some unit tests, Comprehensive testing)"
+    
+  methodology_specific:
+    - refactoring_tolerance: "How much refactoring is acceptable? (Minimal, Moderate, Extensive, Continuous)"
+    - design_upfront: "Design approach preference? (Emergent design, Some upfront, Detailed upfront, Hybrid)"
+    - feedback_cycle_preference: "Preferred feedback cycle? (Very fast, Fast, Moderate, Longer cycles acceptable)"
+    - test_first_comfort: "Comfort with writing tests first? (Uncomfortable, Willing to learn, Comfortable, Prefer it)"
+    
+  technical:
+    - primary_language: "Primary development language? (.NET, Java, Python, JavaScript, Go, Other)"
+    - testing_framework_preference: "Testing framework preference? (Language default, Specific framework, No preference)"
+    - code_coverage_goals: "Code coverage expectations? (Basic, Good, High, Maximum practical)"
+    - integration_testing_needs: "Integration testing needs? (Unit tests only, Some integration, Comprehensive, End-to-end)"
+    
+  organizational:
+    - team_size: "Development team size? (Solo, 2-5, 5-15, 15+)"
+    - time_pressure: "Development timeline pressure? (Relaxed, Moderate, Tight, Extreme)"
+    - quality_requirements: "Quality requirements? (Standard, High, Critical, Life-safety)"
+    - learning_investment: "Time available for methodology learning? (Minimal, Some, Substantial, Extensive)"
+
+comparison_framework:
+  vs_bdd:
+    tdd_advantages:
+      - "Focus on technical implementation and code design"
+      - "Faster feedback cycle for developers"  
+      - "Better for algorithmic and technical code"
+      - "Lower barrier to entry for developers"
+    bdd_advantages:
+      - "Better business stakeholder involvement"
+      - "Focus on user behavior and business value"
+      - "Natural language specifications"
+      - "Better for complex business requirements"
+    when_to_choose_tdd:
+      - "Developer-focused projects"
+      - "Technical libraries or frameworks"
+      - "Algorithm-heavy code"
+      - "Refactoring existing systems"
+  
+  vs_ddd:
+    tdd_advantages:
+      - "Immediate feedback on code quality"
+      - "Drives testable, modular design"
+      - "Works well for any domain complexity"
+      - "Focuses on implementation quality"
+    ddd_advantages:
+      - "Better for complex business domains"
+      - "Creates shared understanding with business"
+      - "Scales to large, complex systems"
+      - "Focuses on domain modeling accuracy"
+    when_to_choose_tdd:
+      - "Well-understood domains"
+      - "Technical focus over business complexity"
+      - "Quality and maintainability priority"
+      - "Smaller to medium-sized systems"
+
+  vs_traditional:
+    tdd_advantages:
+      - "Higher code quality and maintainability"
+      - "Better test coverage by design"
+      - "Immediate feedback on design decisions"
+      - "Reduced debugging time"
+      - "More confident refactoring"
+    traditional_advantages:
+      - "Faster initial development (perceived)"
+      - "More familiar to many developers"
+      - "Less upfront methodology learning"
+      - "Flexibility in testing approach"
+    when_to_choose_tdd:
+      - "Quality is priority over speed"
+      - "Long-term maintainability important"
+      - "Complex business logic"
+      - "Team willing to invest in learning"
+
+customization_points:
+  tdd_cycle_adaptation:
+    - cycle_duration: "Customize Red-Green-Refactor cycle timing"
+    - test_granularity: "Choose unit test granularity and scope"
+    - refactoring_frequency: "Determine refactoring frequency and scope"
+    - design_emergence: "Balance emergent vs upfront design"
+    
+  testing_strategy:
+    - test_types: "Choose test types (unit, integration, contract, property-based)"
+    - mock_strategy: "Define mocking and stubbing approach"
+    - test_data_management: "Approach to test data and fixtures"
+    - performance_testing: "Integration of performance testing in TDD"
+    
+  team_practices:
+    - pair_programming: "Pair programming integration with TDD"
+    - code_review_process: "Code review process adapted for TDD"
+    - knowledge_sharing: "TDD knowledge sharing and mentoring"
+    - continuous_improvement: "Regular retrospectives on TDD practice"
+    
+  tooling_integration:
+    - ide_integration: "IDE setup for optimal TDD workflow"
+    - continuous_testing: "Automated test running and feedback"
+    - coverage_reporting: "Test coverage tracking and reporting"
+    - quality_metrics: "Code quality metrics and tracking"
+
+integration_points:
+  development_workflow:
+    - version_control: "Git workflow optimized for TDD commits"
+    - continuous_integration: "CI pipeline integration with TDD practices"
+    - code_review: "Pull request process adapted for test-first development"
+    - deployment_pipeline: "Deployment automation with comprehensive test gates"
+    
+  quality_assurance:
+    - automated_testing: "Integration with broader automated testing strategy"
+    - static_analysis: "Static code analysis complementing TDD"
+    - performance_testing: "Performance testing integration in TDD workflow"
+    - security_testing: "Security testing practices within TDD"
+    
+  team_collaboration:
+    - requirements_gathering: "Requirements analysis adapted for TDD"
+    - stakeholder_communication: "Communicating TDD benefits to stakeholders"
+    - knowledge_management: "Documentation and knowledge sharing for TDD practices"
+    - onboarding_process: "New team member onboarding for TDD methodology"
+
+validation_criteria:
+  methodology_adoption:
+    - test_first_percentage: "Percentage of code developed test-first (target: >80%)"
+    - red_green_refactor_compliance: "Adherence to TDD cycle discipline"
+    - test_quality: "Test quality and maintainability assessment"
+    - refactoring_frequency: "Regular refactoring practice adoption"
+    
+  code_quality_metrics:
+    - test_coverage: "Code coverage maintained (target: >85% for business logic)"
+    - cyclomatic_complexity: "Code complexity kept manageable through TDD"
+    - defect_density: "Reduced defect density in production"
+    - maintainability_index: "Improved code maintainability scores"
+    
+  team_productivity:
+    - development_velocity: "Sustained or improved development velocity"
+    - debugging_time: "Reduced time spent debugging"
+    - confidence_in_changes: "Increased confidence when making changes"
+    - learning_curve_completion: "Team proficiency with TDD practices"
+    
+  business_impact:
+    - feature_stability: "Reduced regression issues in production"
+    - time_to_market: "Sustainable development pace"
+    - technical_debt: "Managed technical debt through continuous refactoring"
+    - stakeholder_satisfaction: "Improved confidence in code quality"
